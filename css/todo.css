@@ -1,0 +1,46 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.head{
+    text-align: center;
+    background-color: rgba(228, 196, 154, 0.664);
+    border-radius: 5%;
+}
+
+.option{
+    margin: 0 25%;;
+}
+.select{
+    border: none;
+    background-color:whitesmoke
+}
+.todoadd{
+    margin-top: 2rem;
+    height:30rem;
+    border:1px solid black ;
+    overflow-y: scroll;
+}
+.row{
+    margin-top: 2rem;
+}
+ul{
+    list-style-type: none;
+}
+.delete{
+    margin-left:20px;
+}
+.listadder{
+    margin-left:10px;
+}
+.checbo{
+    margin-right: 10px;
+}
+/* .delete:hover{
+    background-color: red;
+    transform: scale(1.5);
+} */
+.alertred{
+    border: red;
+}
