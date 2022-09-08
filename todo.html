@@ -27,13 +27,14 @@
                 <div class="row ">
                     <input type="text" class="col-6" placeholder="ToDo*" id="inpt">
                     <button class="btn col-3 btn-primary " id="add" onclick="add()">Add</button>
-                    <select class="bootstrap-select col-2 select">
-                        <option value="1" selected="selected"><button>All</button></option>
-                        <option value="2"><button >Active</button></option>
-                        <option value="3"><button>Completed</button></option>
-                    </select>
-                    <button onclick="active()" class="btn col-1 btn-secondary">Active</button>
-
+                    <div class="col-3">
+                        <button class="change" id="change" onclick="optionshow()"><i class="fa-solid fa-filter"></i>  All</button>
+                        <ul id ="option" class="optio">
+                            <li class="showall"><button class="btn" onclick="showall()"><i class="fa-solid fa-filter"></i> All</button></li>
+                            <li class="showactive"><button class="btn" onclick="active()"><i class="fa-solid fa-filter"></i> Active</button></li>
+                            <li class="showcomplt"><button class="btn" onclick="complt()"><i class="fa-solid fa-filter"></i> Completed</button></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="todoadd">
                     
@@ -49,6 +50,7 @@
 
     <!-- JavaScript Bundle with Popper -->
     <script src="js/todo.js"></script>
+    <!-- <script src="js/todo1.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
         crossorigin="anonymous"></script>

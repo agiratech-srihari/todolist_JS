@@ -8,13 +8,8 @@
     background-color: rgba(228, 196, 154, 0.664);
     border-radius: 5%;
 }
-
 .option{
     margin: 0 25%;;
-}
-.select{
-    border: none;
-    background-color:whitesmoke
 }
 .todoadd{
     margin-top: 2rem;
@@ -41,6 +36,16 @@ ul{
     background-color: red;
     transform: scale(1.5);
 } */
-.alertred{
-    border: red;
+
+.optio{
+    /* position: absolute; */
+    display: none;
+    background-color: bisque;
+}
+.showoption{
+    position: absolute;
+    display: block;
+    background-color:white;
+    border: solid 1px black;
+    /* color: rgba(255, 255, 255, 0.925); */
 }
