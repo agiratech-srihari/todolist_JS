@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="todo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet"/> -->
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="option">
+
+                <div class="head">
+                    <h1>To Do List</h1>
+                </div>
+                <div class="row ">
+                    <input type="text" class="col-6" placeholder="ToDo*" id="inpt">
+                    <button class="btn col-3 btn-primary " id="add" onclick="add()">Add</button>
+                    <div class="col-3">
+                        <button class="change" id="change" onclick="optionshow()"><i class="fa-solid fa-filter"></i>  All</button>
+                        <ul id ="option" class="optio">
+                            <li class="showall"><button class="btn" onclick="showall()"><i class="fa-solid fa-filter"></i> All</button></li>
+                            <li class="showactive"><button class="btn" onclick="active()"><i class="fa-solid fa-filter"></i> Active</button></li>
+                            <li class="showcomplt"><button class="btn" onclick="complt()"><i class="fa-solid fa-filter"></i> Completed</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="todoadd">
+                    
+                    <ul id="todolist">
+
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle with Popper -->
+    <!-- <script src="js/todo.js"></script> -->
+    <script>
+var inpt = document.getElementById("inpt");
+var list = [];
+var createcb = '';
+let  arrdef = {};
+var deleteicon = "";
+var listadder = "";
+var listele = "";
+var todolist = document.getElementById("todolist");
+var activearr = "";
+var showallarr = "";
+var optionbutton = document.getElementById("change");
+var difopt = document.getElementById("option");
+var index = '';
+
+
+function optionshow() {
+    difopt.classList.toggle("showoption");
+}
+
+function add() {
+    createcb = document.createElement("input");
+    createcb.type = "checkbox";
+    createcb.id = "checbo";
+    createcb.className = "checbo";
+
+    deleteicon = document.createElement("i");
+    deleteicon.className = "delete";
+
+    arrdef = {
+        name: inpt.value,
+        check: createcb,
+        delete: `<button id="del">
+                    <i class="fa-solid fa-trash"></i>
+                    </button>`,
+    }
+
+    list.push(arrdef);
+    // console.log(list);
+
+    listele = document.createElement('li');
+    arrout = document.createElement("span");
+    arrout.id = "arroutput";
+    arrout.className = "arroutput";
+
+    listadder = document.createElement('span');
+    listadder.id = "listadder";
+
+    let index = list[list.length - 1];
+    listadder.innerHTML = index.name;
+    deleteicon.innerHTML = index.delete;
+
+    arrout.appendChild(createcb);
+    arrout.appendChild(listadder);
+    arrout.appendChild(deleteicon);
+    listele.append(arrout);
+    todolist.appendChild(listele);
+
+    let remove = document.getElementsByClassName('delete');
+    for (let i = 0; i < remove.length; i++) {
+        remove[i].onclick = function () {
+            var div = this.parentElement;
+            div.style.display = "none";
+            list.splice(i, 1);
+        };
+    }
+}
+
+function active() {
+    optionbutton.innerHTML = '<i class="fa-solid fa-filter"></i>' + "Active";
+    
+    while(todolist.hasChildNodes()){
+        todolist.removeChild(todolist.firstChild)
+    }
+    activearr = list.filter((list) =>
+    list.check.checked == false
+    )
+    
+    for (let i = 0; i < activearr.length; i++) {
+        // console.log(activearr[i]);
+        createcb = document.createElement("input");
+    createcb.type = "checkbox";
+    createcb.id = "checbo";
+    createcb.className = "checbo";
+
+    deleteicon = document.createElement("i");
+    deleteicon.className = "delete";
+
+    
+    listele = document.createElement('li');
+    arrout = document.createElement("span");
+    arrout.id = "arroutput";
+    arrout.className = "arroutput";
+
+    listadder = document.createElement('span');
+    listadder.id = "listadder";
+    index = activearr[i];
+    listadder.innerHTML = index.name;
+    deleteicon.innerHTML = index.delete;
+
+    arrout.appendChild(createcb);
+    arrout.appendChild(listadder);
+    arrout.appendChild(deleteicon);
+    listele.append(arrout);
+    todolist.appendChild(listele);
+
+    let remove = document.getElementsByClassName('delete');
+    for (let i = 0; i < remove.length; i++) {
+        remove[i].onclick = function () {
+            var div = this.parentElement;
+            div.style.display = "none";
+            list.splice(i, 1);
+        };
+    }
+    }
+    
+}
+function showall() {
+    optionbutton.innerHTML = '<i class="fa-solid fa-filter"></i>' + "All";
+    showallarr=list;
+    while(todolist.hasChildNodes()){
+        todolist.removeChild(todolist.firstChild)
+    }
+    for(let i =0;i< showallarr.length;i++){
+    createcb = document.createElement("input");
+    createcb.type = "checkbox";
+    createcb.id = "checbo";
+    createcb.className = "checbo";
+
+    deleteicon = document.createElement("i");
+    deleteicon.className = "delete";
+
+    listele = document.createElement('li');
+    arrout = document.createElement("span");
+    arrout.id = "arroutput";
+    arrout.className = "arroutput";
+
+    listadder = document.createElement('span');
+    listadder.id = "listadder";
+    
+    let index = showallarr[i];
+    listadder.innerHTML = index.name;
+    deleteicon.innerHTML = index.delete;
+
+    arrout.appendChild(createcb);
+    arrout.appendChild(listadder);
+    arrout.appendChild(deleteicon);
+    listele.append(arrout);
+    todolist.appendChild(listele);
+
+    let remove = document.getElementsByClassName('delete');
+    for (let i = 0; i < remove.length; i++) {
+        remove[i].onclick = function () {
+            var div = this.parentElement;
+            div.style.display = "none";
+            list.splice(i, 1);
+        };
+    }
+}
+}
+function complt() {
+    optionbutton.innerHTML = '<i class="fa-solid fa-filter"></i>' + "Completed";
+    while(todolist.hasChildNodes()){
+        todolist.removeChild(todolist.firstChild)
+    }
+
+    compltarr = list.filter((list) => list.check.checked == true)
+
+    for (let i = 0; i < compltarr.length; i++) {
+    
+    createcb = document.createElement("input");
+    createcb.type = "checkbox";
+    // checbo.checked;
+    createcb.checked="true";
+    createcb.id = "checbo";
+    createcb.className = "checbo";
+    deleteicon = document.createElement("i");
+    deleteicon.className = "delete";
+
+    
+
+    listele = document.createElement('li');
+    arrout = document.createElement("span");
+    arrout.id = "arroutput";
+    arrout.className = "arroutput";
+
+    listadder = document.createElement('span');
+    listadder.id = "listadder";
+    let index = compltarr[i];
+    listadder.innerHTML = index.name;
+    deleteicon.innerHTML = index.delete;
+
+    arrout.appendChild(createcb);
+    arrout.appendChild(listadder);
+    arrout.appendChild(deleteicon);while(todolist.hasChildNodes()){
+        todolist.removeChild(todolist.firstChild)
+    }
+    listele.append(arrout);
+    todolist.appendChild(listele);
+
+    let remove = document.getElementsByClassName('delete');
+    for (let i = 0; i < remove.length; i++) {
+        remove[i].onclick = function () {
+            var div = this.parentElement;
+            div.style.display = "none";
+            list.splice(i, 1);
+        };
+    }
+}
+}
+
+    </script>
+    <!-- <script src="js/todo1.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
