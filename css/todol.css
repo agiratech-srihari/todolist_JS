@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.head{
+    text-align: center;
+    background-color: rgba(228, 196, 154, 0.664);
+    border-radius: 5%;
+}
+.option{
+    margin: 0 25%;;
+}
+.todoadd{
+    margin-top: 2rem;
+    height:30rem;
+    border:1px solid black ;
+    overflow-y: scroll;
+}
+.row{
+    margin-top: 2rem;
+}
+ul{
+    list-style-type: none;
+}
+.delete{
+    margin-left:20px;
+}
+.listadder{
+    margin-left:10px;
+}
+.checbo{
+    margin-right: 10px;
+}
+/* .delete:hover{
+    background-color: red;
+    transform: scale(1.5);
+} */
+
+.optio{
+    /* position: absolute; */
+    display: none;
+    background-color: bisque;
+}
+.showoption{
+    position: absolute;
+    display: block;
+    background-color:white;
+    border: solid 1px black;
+    /* color: rgba(255, 255, 255, 0.925); */
+}
+.searchbar{
+    display: none;
+}
+.showbar{
+    display:inline-block;
+}
+.searchmenu{
+    margin-top: 1rem;
+}
+.btncolorred{
+    background-color: red;
+}
