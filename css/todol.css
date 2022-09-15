@@ -5,7 +5,7 @@
 
 .head{
     text-align: center;
-    background-color: rgba(228, 196, 154, 0.664);
+    /* background-color: rgba(228, 196, 154, 0.664); */
     border-radius: 5%;
 }
 .option{
@@ -19,6 +19,7 @@
 }
 .row{
     margin-top: 2rem;
+    justify-content: space-between;
 }
 ul{
     list-style-type: none;
@@ -60,4 +61,20 @@ ul{
 }
 .btncolorred{
     background-color: red;
+}
+#add{
+    margin-left: 0.5rem;
+}
+.headimage{
+    margin-top: .5rem;
+    background-image: url('/home/agira/srihari/todo_list/css/header.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height:32vh;
+    /* background-position: 2%; */
+}
+.blur{
+    background-color: rgba(0, 0, 0, 0.164);
+    background-size: cover;
+    height: 32vh;
 }
