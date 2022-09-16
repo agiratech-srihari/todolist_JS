@@ -23,7 +23,7 @@
             <div class="headimage">
                 <div class="blur">
                     <div class="option">
-                        <div class="head" style="color: antiquewhite;">
+                        <div class="head" style="color: rgb(255, 255, 255);">
                             <h1>To Do List</h1>
                         </div>
                         <div class="row ">
@@ -78,6 +78,7 @@
         var todolist = document.getElementById("todolist");
         var activearr = "";
         var showallarr = "";
+        var compltarr = '';
         var searcharr = '';
         var optionbutton = document.getElementById("change");
         var difopt = document.getElementById("option");
@@ -85,7 +86,11 @@
         var showicon = document.getElementsByClassName("searchicon")
         var searchbar = document.getElementById("searchbar")
         var btn = document.getElementById("btncolor");
-        var imparr = '';
+        // var actarr = '';
+        var imparr = JSON.parse(localStorage.getItem("list")) || [];
+        
+        
+        showall()
         
         
         function optionshow() {
@@ -94,7 +99,6 @@
         
         function showsearchbar() {
             searchbar.classList.toggle("showbar");
-            // console.log("hello")
         }
         function add() {
             let expr = /^[1-9]/
@@ -118,29 +122,25 @@
             arrdef = {
                 name: inpt.value,
                 check: createcb,
+                status: false,
                 delete: `<button id="del">
                     <i class="fa-solid fa-trash"></i>
                     </button>`,
                 }
 
-                list.push(arrdef);
-                localStorage.setItem("list", JSON.stringify([...JSON.parse(localStorage.getItem("list") || "[]"),
-                    { key : arrdef},]));
-                imparr = JSON.parse(localStorage.getItem("list"))
-                for ( var i in imparr){
-                console.log(imparr[i])
-                }            
-              
-                        
+                imparr.push(arrdef);
+                localStorage.setItem("list",JSON.stringify(imparr))
+                         
+                    
+                 
                     listele = document.createElement('li');
                     arrout = document.createElement("span");
                     arrout.id = "arroutput";
                     arrout.className = "arroutput";
-                    
                     listadder = document.createElement('span');
                     listadder.id = "listadder";
                     
-                    let index = list[list.length - 1];
+                    let index = imparr[imparr.length -1];
                     listadder.innerHTML = index.name;
                     deleteicon.innerHTML = index.delete;
                     
@@ -155,24 +155,38 @@
                         remove[i].onclick = function () {
                             var div = this.parentElement;
                             div.style.display = "none";
-                            list.splice(i, 1);
+                            imparr.splice(i, 1);
+                            localStorage.setItem("list",JSON.stringify(imparr))
                         };
                     }
-            
+                    
+                    
                 }
-            }
+                var checkboxchange = document.getElementsByClassName('checbo')
+        for (let i = 0; i < checkboxchange.length; i++) {
+            checkboxchange[i].addEventListener("click", () => {
+                if (imparr[i].status) {
+                    imparr[i].status = false;
+                    localStorage.setItem("list",JSON.stringify(imparr));
+            
+                } else {
+                    imparr[i].status = true;
+                    localStorage.setItem("list",JSON.stringify(imparr));
+                    
+                }
+            })
+        }
+        }
         function search(){
             while (todolist.hasChildNodes()) {
                 todolist.removeChild(todolist.firstChild)
             }
             var searchit = searchitem.value;
-            console.log(searchit);
-            searcharr = list.filter((item)=> item.name == searchit);
-            // searcharr = list.includes(searchit);
-            console.log(searcharr)
+            // console.log(searchit);
+            searcharr = imparr.filter((item)=> item.name == searchit);
+         
             
-            console.log(searcharr);
-            // console.log(searchit)
+           
             if (searcharr.length != 0){
                 for (let i=0;i<searcharr.length;i++){
                     createcb = document.createElement("input");
@@ -194,7 +208,7 @@
                 let index = searcharr[i];
                 listadder.innerHTML = index.name;
                 deleteicon.innerHTML = index.delete;
-                // console.log(searcharr);
+                
                 
                 if (index.check.checked) {
                     
@@ -205,7 +219,7 @@
                     createcb.checked = false;
                     
                 }
-                // console.log(searcharr[i]);
+               
                 arrout.appendChild(createcb);
                 arrout.appendChild(listadder);
                 arrout.appendChild(deleteicon);
@@ -214,8 +228,9 @@
             }
         }
         else{
-            // var tod = document.getElementById("todoadd")
+            
             todolist.innerHTML="Element you are searching is not available";
+            // todolist.classList="nodata";
         }
     }
     
@@ -223,20 +238,19 @@
     function active() {
         optionbutton.innerHTML = '<i class="fa-solid fa-filter"></i>' + "Active";
         
-            while (todolist.hasChildNodes()) {
-                todolist.removeChild(todolist.firstChild)
-            }
-            activearr = list.filter((list) =>
-                list.check.checked == false
-                )
-                
-                localStorage.setItem("listlo",JSON.stringify(activearr));
-                let actarr = JSON.parse(localStorage.getItem("listlo"))
-                for (var i in  actarr){
-                    console.log(actarr[i])
-                }
-            for (let i = 0; i < activearr.length; i++) {
-                // console.log(activearr[i]);
+        activearr = imparr.filter((list) =>
+        list.status == false
+        )
+        // console.log(activearr)
+        
+        
+        while (todolist.hasChildNodes()) {
+            todolist.removeChild(todolist.firstChild)
+        }
+        
+        for (let i = 0; i < activearr.length; i++) {
+            
+            
                 createcb = document.createElement("input");
                 createcb.type = "checkbox";
                 createcb.id = "checbo";
@@ -250,7 +264,7 @@
                 arrout = document.createElement("span");
                 arrout.id = "arroutput";
                 arrout.className = "arroutput";
-
+                
                 listadder = document.createElement('span');
                 listadder.id = "listadder";
                 index = activearr[i];
@@ -268,15 +282,31 @@
                     remove[i].onclick = function () {
                         var div = this.parentElement;
                         div.style.display = "none";
-                        list.splice(i, 1);
+                        JSON.parse(localStorage.getItem("list"))
+                        imparr.splice(i, 1);
+                        localStorage.setItem("list",JSON.stringify(imparr))
                     };
                 }
+            }
+            var checkboxchange = document.getElementsByClassName('checbo')
+            for (let i = 0; i < checkboxchange.length; i++) {
+                checkboxchange[i].addEventListener("click", () => {
+                    if (imparr[i].status) {
+                        imparr[i].status = false;
+                        localStorage.setItem("list",JSON.stringify(imparr));
+                        console.log("heloo");
+                    } else {
+                        imparr[i].status = true;
+                        localStorage.setItem("list",JSON.stringify(imparr));
+                        // console.log("what");
+                    }
+                })
             }
 
         }
         function showall() {
             optionbutton.innerHTML = '<i class="fa-solid fa-filter"></i>' + "All";
-            showallarr = list;
+            showallarr = imparr;
             showicon.classList = "showicon";
             while (todolist.hasChildNodes()) {
                 todolist.removeChild(todolist.firstChild)
@@ -303,16 +333,15 @@
                 deleteicon.innerHTML = index.delete;
                 // console.log(showallarr);
 
-                if (index.check.checked) {
-
+                if (index.status) {
+                    console.log("hello")
                     createcb.checked = true;
-
                 }
                 else {
                     createcb.checked = false;
 
                 }
-                console.log(showallarr[i]);
+                // console.log(showallarr[i]);
                 arrout.appendChild(createcb);
                 arrout.appendChild(listadder);
                 arrout.appendChild(deleteicon);
@@ -324,11 +353,27 @@
                     remove[i].onclick = function () {
                         var div = this.parentElement;
                         div.style.display = "none";
-                        list.splice(i, 1);
+                        JSON.parse(localStorage.getItem("list"))
+                        imparr.splice(i, 1);
+                            localStorage.setItem("list",JSON.stringify(imparr))
                     };
                 }
             }
-            list=showallarr;
+            var checkboxchange = document.getElementsByClassName('checbo')
+            for (let i = 0; i < checkboxchange.length; i++) {
+                checkboxchange[i].addEventListener("click", () => {
+                    if (imparr[i].status) {
+                        imparr[i].status = false;
+                        localStorage.setItem("list",JSON.stringify(imparr));
+                
+                    } else {
+                        imparr[i].status = true;
+                        localStorage.setItem("list",JSON.stringify(imparr));
+                        
+                    }
+                })
+            }
+            // list=showallarr;
         }
         function complt() {
             optionbutton.innerHTML = '<i class="fa-solid fa-filter"></i>' + "Completed";
@@ -336,7 +381,7 @@
                 todolist.removeChild(todolist.firstChild)
             }
 
-            compltarr = list.filter((list) => list.check.checked == true)
+            compltarr = imparr.filter((item) => item.status == true)
 
             for (let i = 0; i < compltarr.length; i++) {
 
@@ -372,9 +417,25 @@
                     remove[i].onclick = function () {
                         var div = this.parentElement;
                         div.style.display = "none";
-                        list.splice(i, 1);
+                        JSON.parse(localStorage.getItem("list"))
+                        imparr.splice(i, 1);
+                        localStorage.setItem("list",JSON.stringify(imparr))
                     };
                 }
+            }
+            var checkboxchange = document.getElementsByClassName('checbo')
+            for (let i = 0; i < checkboxchange.length; i++) {
+                checkboxchange[i].addEventListener("click", () => {
+                    if (imparr[i].status) {
+                        imparr[i].status = false;
+                        localStorage.setItem("todo",JSON.stringify(imparr));
+                        console.log("heloo");
+                    } else {
+                        imparr[i].status = true;
+                        localStorage.setItem("todo",JSON.stringify(imparr));
+                        // console.log("what");
+                    }
+                })
             }
         }
 

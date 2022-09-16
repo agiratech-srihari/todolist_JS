@@ -12,10 +12,10 @@
     margin: 0 25%;;
 }
 .todoadd{
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     height:30rem;
     border:1px solid black ;
-    overflow-y: scroll;
+    overflow-y: scroll ;
 }
 .row{
     margin-top: 2rem;
@@ -66,7 +66,7 @@ ul{
     margin-left: 0.5rem;
 }
 .headimage{
-    margin-top: .5rem;
+    /* margin-top: .5rem; */
     background-image: url('/home/agira/srihari/todo_list/css/header.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -77,4 +77,21 @@ ul{
     background-color: rgba(0, 0, 0, 0.164);
     background-size: cover;
     height: 32vh;
+}
+#todoadd{
+    border-radius: 5px;
+    border: 2px solid black;
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.144);
+}
+.container-fluid{
+    background-color: rgb(255, 255, 255);
+    height: 99vh;
+    margin-top: 0%;
+}
+.nodata{
+    display: block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
 }
